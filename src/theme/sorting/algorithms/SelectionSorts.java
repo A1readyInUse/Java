@@ -3,23 +3,28 @@ package theme.sorting.algorithms;
 public class SelectionSorts extends Sorts {
 	public static void main(String[] args) {
 		SelectionSorts ss = new SelectionSorts();
-		int[] arr = ss.initArray()	;
+		int[] arr = ss.initArray();
 		ss.selectionSort(arr);
 	}
-	
+
+	//
 	public SelectionSorts() {
 		super();
 	}
-	
+
+	public SelectionSorts(int size) {
+		super(size);
+	}
+
 	// 1.
 	public void selectionSort(int[] arr) {
 		printArray(arr);
-		
-		for(int i=0; i<arr.length; i++) {
+
+		for (int i = 0; i < arr.length; i++) {
 			int lower = i;
-			
-			for( int j=i; j<arr.length; j++) {
-				if(arr[j] < arr[lower]) {
+
+			for (int j = i; j < arr.length; j++) {
+				if (arr[j] < arr[lower]) {
 					lower = j;
 				}
 			}

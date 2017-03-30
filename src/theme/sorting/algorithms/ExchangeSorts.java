@@ -1,14 +1,13 @@
 package theme.sorting.algorithms;
 
 public class ExchangeSorts extends Sorts {
-	static int level = 0;
-
 	public static void main(String[] args) {
 		ExchangeSorts es = new ExchangeSorts(10);
 		int[] arr = es.initArray();
 		es.quickSort(arr);
 	}
 
+	//
 	public ExchangeSorts() {
 		super();
 	}
@@ -105,17 +104,14 @@ public class ExchangeSorts extends Sorts {
 	}
 
 	public int[] quickSort(int arr[], int start, int len) {
-		if (len < 0)
-			return arr;
+		len += start;
 
-		int pivot = start;
-		int greater = start + 1;
-		printArray(arr);
+		int pivot = start, greater = start + 1;
 
-		// 1. swap position in array
-		for (int i = greater; i < start + len; i++) {
+		// 1. find smaller than arr[pivot]
+		for (int i = greater; i < len; i++) {
 			if (arr[i] < arr[pivot]) {
-				if (i == greater) {
+				if (i == greater) { // when it doesn't swap
 					greater++;
 				} else if (arr[i] < arr[pivot]) {
 					swap(arr, i, greater);
@@ -128,14 +124,13 @@ public class ExchangeSorts extends Sorts {
 		// 2. swap pivot
 		pivot = greater - 1;
 		swap(arr, pivot, start);
-		printArray(arr);
-		System.out.println();
 
-		// 3. recursive call
 		if (pivot != start) {
+			// 3.1. less than pivot
 			arr = quickSort(arr, start, pivot - start);
 		}
 		if (len != greater) {
+			// 3.2. greater than pivot
 			arr = quickSort(arr, greater, len - greater);
 		}
 

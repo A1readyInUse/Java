@@ -7,8 +7,9 @@ public class MergeSorts extends Sorts {
 		arr = ms.mergeSort(arr);
 	}
 
+	//
 	public MergeSorts() {
-		super(16);
+		super();
 	}
 
 	public MergeSorts(int size) {
@@ -16,25 +17,6 @@ public class MergeSorts extends Sorts {
 	}
 
 	// 1.
-	// public void AAAAA(int[] arr) {
-	// }
-
-	// 2.
-	public void cascadeMergeSort(int[] arr) {
-
-	}
-
-	// 3.
-	public void oscillatingMergeSort(int[] arr) {
-
-	}
-
-	// 4.
-	public void polyphaseMergeSort(int[] arr) {
-
-	}
-
-	// private
 	public int[] mergeSort(int[] arr) {
 		if (arr.length == 1) {
 			return arr;
@@ -48,7 +30,7 @@ public class MergeSorts extends Sorts {
 			System.arraycopy(arr, 0, first, 0, size1st);
 			System.arraycopy(arr, 1, second, 0, size2nd);
 
-			arr = merge2Arrays(first, second);
+			arr = merge_sort2Arrays(first, second);
 		}
 
 		if (arr.length > 2) {
@@ -66,14 +48,30 @@ public class MergeSorts extends Sorts {
 
 			first = mergeSort(first);
 			second = mergeSort(second);
-			arr = merge2Arrays(first, second);
+			arr = merge_sort2Arrays(first, second);
 			printArray(arr);
 		}
 
 		return arr;
 	}
 
-	private int[] merge2Arrays(int[] arr1st, int[] arr2nd) {
+	// 2.
+	public void cascadeMergeSort(int[] arr) {
+
+	}
+
+	// 3.
+	public void oscillatingMergeSort(int[] arr) {
+
+	}
+
+	// 4.
+	public void polyphaseMergeSort(int[] arr) {
+
+	}
+
+	// private
+	private int[] merge_sort2Arrays(int[] arr1st, int[] arr2nd) {
 		int size = arr1st.length + arr2nd.length;
 		int[] newArr = new int[size];
 
