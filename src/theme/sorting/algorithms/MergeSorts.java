@@ -91,11 +91,11 @@ public class MergeSorts extends Sorts {
 		}
 
 		// after finishing an array, fill the rest
-		for (int j = idxNew; j < newArr.length; j++) {
+		for (int i = idxNew; i < newArr.length; i++) {
 			if (idx1st >= arr1st.length) {
-				newArr[j] = arr2nd[idx2nd++];
+				newArr[i] = arr2nd[idx2nd++];
 			} else if (idx2nd >= arr2nd.length) {
-				newArr[j] = arr1st[idx1st++];
+				newArr[i] = arr1st[idx1st++];
 			}
 		}
 
