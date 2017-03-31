@@ -3,7 +3,6 @@ package theme.sorting.algorithms;
 public class SelectionSorts extends Sorts {
 	public static void main(String[] args) {
 		SelectionSorts ss = new SelectionSorts();
-		int[] arr = ss.initArray();
 		ss.selectionSort(arr);
 	}
 

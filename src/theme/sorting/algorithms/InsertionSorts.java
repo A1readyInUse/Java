@@ -1,6 +1,21 @@
 package theme.sorting.algorithms;
 
 public class InsertionSorts extends Sorts {
+	public static void main(String[] args) {
+		InsertionSorts is = new InsertionSorts();
+		// is.insertionSort(arr);
+		is.shellSort(arr);
+	}
+
+	//
+	public InsertionSorts() {
+		super();
+	}
+
+	public InsertionSorts(int size) {
+		super(size);
+	}
+
 	// 1.
 	public void insertionSort(int[] arr) {
 		for (int i = 0; i < arr.length; i++) {
@@ -21,7 +36,27 @@ public class InsertionSorts extends Sorts {
 
 	// 2.
 	public void shellSort(int[] arr) {
+		final float shrink = 1.3F;
+		int gap = (int) (arr.length / shrink);
 
+		while (gap > 0) {
+			for (int i = gap; i < arr.length; i++) {
+				for (int j = i; j - gap >= 0; j -= gap) {
+					boolean isSwapped = false;
+					
+					if (arr[j - gap] > arr[j]) {
+						isSwapped = swap(arr, j, j - gap);
+						printArray(arr);
+					}
+					
+					if (!isSwapped) {
+						break;
+					}
+				}
+			}
+			System.out.println();
+			gap /= shrink;
+		}
 	}
 
 	// 3.

@@ -2,9 +2,8 @@ package theme.sorting.algorithms;
 
 public class ExchangeSorts extends Sorts {
 	public static void main(String[] args) {
-		ExchangeSorts es = new ExchangeSorts(10);
-		int[] arr = es.initArray();
-		es.quickSort(arr);
+		ExchangeSorts qs = new ExchangeSorts(11);
+		qs.quickSort(arr, 0, arr.length);
 	}
 
 	//
@@ -46,7 +45,6 @@ public class ExchangeSorts extends Sorts {
 				for (int i = left; i < right; i++) {
 					if (arr[i] > arr[i + 1]) {
 						isSwapped = swap(arr, i, i + 1);
-						printArray(arr);
 					}
 				}
 				right--;
@@ -57,7 +55,6 @@ public class ExchangeSorts extends Sorts {
 				for (int j = right; j > left; j--) {
 					if (arr[j] < arr[j - 1]) {
 						isSwapped = swap(arr, j, j - 1);
-						printArray(arr);
 					}
 				}
 				left++;
@@ -99,39 +96,38 @@ public class ExchangeSorts extends Sorts {
 	}
 
 	// 6.
-	public void quickSort(int[] arr) {
-		quickSort(arr, 0, arr.length);
-	}
-
 	public int[] quickSort(int arr[], int start, int len) {
 		len += start;
+		int pivot = start;
+		int greater = start + 1;
 
-		int pivot = start, greater = start + 1;
-
-		// 1. find smaller than arr[pivot]
+		// 6.1. find smaller than arr[pivot]
 		for (int i = greater; i < len; i++) {
 			if (arr[i] < arr[pivot]) {
 				if (i == greater) { // when it doesn't swap
 					greater++;
-				} else if (arr[i] < arr[pivot]) {
-					swap(arr, i, greater);
-					greater++;
-					printArray(arr);
+					continue;
 				}
+				swap(arr, i, greater);
+				greater++;
+				printArray(arr);
 			}
 		}
 
-		// 2. swap pivot
+		// 6.2. swap pivot
 		pivot = greater - 1;
+
 		swap(arr, pivot, start);
 
+		// 6.3.1. less than pivot
 		if (pivot != start) {
-			// 3.1. less than pivot
 			arr = quickSort(arr, start, pivot - start);
+			printArray(arr);
 		}
+		// 6.3.2. greater than pivot
 		if (len != greater) {
-			// 3.2. greater than pivot
 			arr = quickSort(arr, greater, len - greater);
+			printArray(arr);
 		}
 
 		return arr;
