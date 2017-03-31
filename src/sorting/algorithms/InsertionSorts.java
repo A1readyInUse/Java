@@ -1,4 +1,4 @@
-package theme.sorting.algorithms;
+package sorting.algorithms;
 
 public class InsertionSorts extends Sorts {
 	public static void main(String[] args) {

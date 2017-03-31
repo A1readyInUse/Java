@@ -1,4 +1,4 @@
-package theme.sorting.algorithms;
+package sorting.algorithms;
 
 import java.util.Arrays;
 
