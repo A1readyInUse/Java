@@ -3,12 +3,11 @@ package abstract1.data.type;
 import java.util.Collection;
 
 public class LinkedList<E> {
-	E element;
+
 	LinkedList<E> prev;
 	LinkedList<E> next;
 
-	public LinkedList() {
-	}
+	E element;
 
 	//
 	public E getFirst() {
@@ -20,62 +19,59 @@ public class LinkedList<E> {
 	}
 
 	public E removeFirst() {
-		LinkedList<E> tNode = new LinkedList<E>();
+		LinkedList<E> tNode = getFirstNode();
 
-		tNode = getFirstNode();
 		E e = tNode.element;
-
 		tNode = tNode.prev;
+
 		return e;
 	}
 
 	public E removeLast() {
-		LinkedList<E> tNode = new LinkedList<E>();
+		LinkedList<E> tNode = getLastNode();
 
-		tNode = getLastNode();
 		E e = tNode.element;
-
 		tNode = tNode.prev;
-		tNode.next = null;
 		return e;
 	}
 
 	public void addFirst(E e) {
-		LinkedList<E> tmp = new LinkedList<E>();
-
-		tmp.element = e;
-		getFirstNode().prev = tmp;
+		LinkedList<E> tNode = new LinkedList<E>();
+		tNode.next = getFirstNode();
+		getFirstNode().prev = tNode;
+		tNode.element = e;
 	}
 
 	public void addLast(E e) {
-		LinkedList<E> tmp = new LinkedList<E>();
-
-		tmp.element = e;
-		getLastNode().next = tmp;
+		LinkedList<E> tNode = new LinkedList<E>();
+		tNode.prev = getLastNode();
+		getLastNode().next = tNode;
+		tNode.element = e;
 	}
 
 	public boolean contains(Object o) {
-		LinkedList<E> tmp = new LinkedList<E>();
-		tmp = getFirstNode();
+		LinkedList<E> tNode = getFirstNode();
 
-		while (tmp.next != null) {
-			if (tmp.element.equals(o)) {
+		while (tNode.next != null) {
+			if (tNode.element.equals(o)) {
 				return true;
 			}
 
-			tmp = tmp.next;
+			tNode = tNode.next;
 		}
-
 		return false;
 	}
 
 	public int size() {
-		LinkedList<E> tmp = new LinkedList<E>();
+		LinkedList<E> tNode = new LinkedList<E>();
 
-		tmp.getFirstNode();
+		tNode = getFirstNode();
+		if (tNode == null) {
+			return 0;
+		}
+
 		int size = 1;
-
-		while (tmp.next != null) {
+		while (tNode.next != null) {
 			size++;
 		}
 
@@ -83,17 +79,17 @@ public class LinkedList<E> {
 	}
 
 	public boolean remove(Object o) {
-		LinkedList<E> tmp = new LinkedList<E>();
-		tmp = getFirstNode();
+		LinkedList<E> tNode = new LinkedList<E>();
+		tNode = getFirstNode();
 
-		while (tmp.next != null) {
-			if (tmp.element.equals(o)) {
-				tmp.prev.next = tmp.next;
-				tmp.next.prev = tmp.prev;
+		while (tNode.next != null) {
+			if (tNode.element.equals(o)) {
+				tNode.prev.next = tNode.next;
+				tNode.next.prev = tNode.prev;
 				return true;
 			}
 
-			tmp = tmp.next;
+			tNode = tNode.next;
 		}
 		return false;
 	}
@@ -104,19 +100,7 @@ public class LinkedList<E> {
 	}
 
 	public void clear() {
-		LinkedList<E> tmp = new LinkedList<E>();
-		tmp = getFirstNode();
-
-		while (tmp.next != null) {
-			tmp = tmp.next;
-
-			tmp.prev.element = null;
-			tmp.prev.prev = null;
-			tmp.prev.next = null;
-		}
-		tmp.element = null;
-		tmp.prev = null;
-		tmp.next = null;
+		this.next = null;
 	}
 
 	public E get(int index) {
@@ -126,59 +110,52 @@ public class LinkedList<E> {
 	public E set(int index, E e) {
 		LinkedList<E> tNode = getNode(index);
 
-		E tElem = tNode.element;
+		E tElement = tNode.element;
 		tNode.element = e;
 
-		return tElem;
+		return tElement;
 	}
 
 	public void add(int index, E e) {
-		LinkedList<E> prevNode = new LinkedList<E>();
-		LinkedList<E> nextNode = new LinkedList<E>();
-		LinkedList<E> tmp = new LinkedList<E>();
+		LinkedList<E> newNode = new LinkedList<E>();
+		LinkedList<E> tNode = getNode(index);
 
-		prevNode = getNode(index).prev;
-		nextNode = getNode(index).next;
-
-		tmp.element = e;
-		tmp.prev = prevNode;
-		tmp.next = nextNode;
+		tNode.next.prev = newNode;
 	}
 
 	public E remove(int index) {
-		LinkedList<E> tmp = getNode(index);
+		LinkedList<E> tNode = getNode(index);
 
-		tmp.prev.next = tmp.next;
-		tmp.next.prev = tmp.prev;
+		tNode.prev.next = tNode.next;
+		tNode.next.prev = tNode.prev;
 
-		return tmp.element;
+		return tNode.element;
 	}
 
 	public int indexOf(Object o) {
-		
+
 		return -1;
 	}
 
 	// private
 	private LinkedList<E> getFirstNode() {
-		LinkedList<E> tmp = new LinkedList<E>();
-		tmp = this;
+		LinkedList<E> tNode = this;
 
-		while (tmp.prev != null) {
-			tmp = prev;
+		while (tNode.prev != null) {
+			tNode = prev;
 		}
-		return tmp;
+
+		return tNode;
 	}
 
 	private LinkedList<E> getLastNode() {
-		LinkedList<E> tmp = new LinkedList<E>();
-		tmp = this;
+		LinkedList<E> tNode = this;
 
-		while (tmp.next != null) {
-			tmp = next;
+		while (tNode.next != null) {
+			tNode = next;
 		}
 
-		return tmp;
+		return tNode;
 	}
 
 	private LinkedList<E> getNode(int index) {
@@ -186,13 +163,12 @@ public class LinkedList<E> {
 			throw new IndexOutOfBoundsException();
 		}
 
-		LinkedList<E> tmp = new LinkedList<E>();
-		tmp = getFirstNode();
+		LinkedList<E> tNode = getFirstNode();
 
 		while (index-- > 0) {
-			tmp = tmp.next;
+			tNode = tNode.next;
 		}
 
-		return tmp;
+		return tNode;
 	}
 }
