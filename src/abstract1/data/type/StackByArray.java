@@ -1,5 +1,6 @@
 package abstract1.data.type;
 
+import java.util.Arrays;
 import java.util.EmptyStackException;
 
 public class StackByArray<E> {
@@ -66,6 +67,6 @@ public class StackByArray<E> {
 	}
 
 	private E[] getArray(int size) {
-		return (E[]) new Object[size];
+		return Arrays.copyOf(data, size);
 	}
 }

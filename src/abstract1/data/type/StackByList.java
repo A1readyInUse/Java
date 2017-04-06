@@ -5,7 +5,7 @@ import java.util.EmptyStackException;
 public class StackByList<E> {
 	E data;
 	int size;
-	
+
 	StackByList<E> prev;
 	StackByList<E> next;
 
@@ -21,35 +21,58 @@ public class StackByList<E> {
 			throw new EmptyStackException();
 		}
 
-		return getLastNode().next.data;
+		return getLastNode().data;
 	}
 
 	public E pop() {
 		if (empty()) {
 			throw new EmptyStackException();
 		}
+		StackByList<E> tNode = new StackByList<E>();
+		tNode.prev.next = null;
+		tNode.prev = null;
 
-		getLastNode().next = null;
-		return getLastNode().next.data;
+		return tNode.data;
 	}
 
 	public void push(E item) {
-		if(empty()) {
-			this.data=item;
-		}else if() {
-			
+		if (empty()) {
+			this.data = item;
+		} else {
+			StackByList<E> tNode = new StackByList<E>();
+
+			tNode.prev = getLastNode();
+			getLastNode().next = tNode;
+			tNode.data = item;
 		}
+
+		size++;
 	}
 
-	public int search(Obejct o) {
-
+	public int search(Object o) {
+		StackByList<E> tNode = this;
+		int count=0;
+		
+		while (tNode != null) {
+			if (tNode.data.equals(o)) {
+				count++;
+			}
+			tNode = tNode.next;
+		}
+		return -1;
 	}
 
+	// private
 	private StackByList<E> getLastNode() {
 		if (empty()) {
 			throw new EmptyStackException();
 		}
 
-		while()
+		StackByList<E> tNode = this;
+		while (tNode.next != null) {
+			tNode = tNode.next;
+		}
+
+		return tNode;
 	}
 }
