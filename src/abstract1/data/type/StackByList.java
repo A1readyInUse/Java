@@ -4,20 +4,21 @@ import java.util.EmptyStackException;
 
 public class StackByList<E> {
 	E data;
-	int size;
+	int size; // current stack size
 
 	StackByList<E> prev;
 	StackByList<E> next;
 
-	public boolean empty() {
+	public boolean isEmpty() {
 		if (size == 0) {
 			return true;
 		}
+
 		return false;
 	}
 
 	public E peek() {
-		if (empty()) {
+		if (isEmpty()) {
 			throw new EmptyStackException();
 		}
 
@@ -25,10 +26,11 @@ public class StackByList<E> {
 	}
 
 	public E pop() {
-		if (empty()) {
+		if (isEmpty()) {
 			throw new EmptyStackException();
 		}
-		StackByList<E> tNode = new StackByList<E>();
+
+		StackByList<E> tNode = getLastNode();
 		tNode.prev.next = null;
 		tNode.prev = null;
 
@@ -36,7 +38,7 @@ public class StackByList<E> {
 	}
 
 	public void push(E item) {
-		if (empty()) {
+		if (isEmpty()) {
 			this.data = item;
 		} else {
 			StackByList<E> tNode = new StackByList<E>();
@@ -51,24 +53,26 @@ public class StackByList<E> {
 
 	public int search(Object o) {
 		StackByList<E> tNode = this;
-		int count=0;
-		
+		int count = 0;
+
 		while (tNode != null) {
 			if (tNode.data.equals(o)) {
 				count++;
 			}
 			tNode = tNode.next;
 		}
+
 		return -1;
 	}
 
 	// private
 	private StackByList<E> getLastNode() {
-		if (empty()) {
+		if (isEmpty()) {
 			throw new EmptyStackException();
 		}
 
 		StackByList<E> tNode = this;
+
 		while (tNode.next != null) {
 			tNode = tNode.next;
 		}

@@ -5,21 +5,25 @@ import java.util.EmptyStackException;
 
 public class StackByArray<E> {
 	E[] data;
-	int size;
+	
+	int size; // current stack size
+	int capacity;
 
 	public StackByArray() {
 		this(16);
 	}
 
-	public StackByArray(int size) {
+	public StackByArray(int capacity) {
 		this.size = 0;
-		data = getArray(size);
+		this.capacity = capacity;
+		data = increaseCapacity(capacity);
 	}
 
 	public boolean isEmpty() {
 		if (size == 0) {
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -27,7 +31,7 @@ public class StackByArray<E> {
 		if (isEmpty()) {
 			throw new EmptyStackException();
 		}
-
+		
 		return data[size - 1];
 	}
 
@@ -35,13 +39,13 @@ public class StackByArray<E> {
 		if (isEmpty()) {
 			throw new EmptyStackException();
 		}
-
+		
 		return data[size--];
 	}
 
 	public void push(E item) {
 		if (isFull()) {
-			data = getArray(2 * data.length);
+			data = increaseCapacity(2 * data.length);
 		}
 
 		data[size - 1] = item;
@@ -55,6 +59,7 @@ public class StackByArray<E> {
 					return i;
 			}
 		}
+		
 		return -1;
 	}
 
@@ -63,10 +68,11 @@ public class StackByArray<E> {
 		if (size == data.length) {
 			return true;
 		}
+		
 		return false;
 	}
 
-	private E[] getArray(int size) {
-		return Arrays.copyOf(data, size);
+	private E[] increaseCapacity(int capacity) {
+		return Arrays.copyOf(data, capacity);
 	}
 }

@@ -1,38 +1,105 @@
 package abstract1.data.type;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
 public class QueueByArray<E> {
-	E item;
-	E[] array;
-	int size;
+	E[] data;
+
+	int capacity;
+	int size; // current queue size
 
 	public QueueByArray() {
 		this(16);
 	}
 
-	public QueueByArray(int size) {
-		this.size = size;
-		array = (E[]) new Object[size];
+	public QueueByArray(int capacitySize) {
+		this.size = 0;
+		data = increaseCapacity(capacitySize);
 	}
 
-	public boolean isEmpty() {
+	//
+	public boolean add(E e) {
+		// ClassCastException
+		// IllegalArgumentException
+		if (Objects.isNull(e)) {
+			throw new NullPointerException();
+		}
+
+		if (isFull()) {
+			throw new IllegalStateException();
+		}
+
+		data[size++] = e;
+		return true;
+	}
+
+	public boolean offer(E e) {
+		// ClassCastException
+		// IllegalArgumentException
+		if (Objects.isNull(e)) {
+			throw new NullPointerException();
+		}
+
+		if (isFull()) {
+			increaseCapacity(2 * data.length);
+		}
+
+		data[size++] = e;
+		return true;
+	}
+
+	public E remove() {
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+
+		return data[(size--) - 1];
+	}
+
+	public E poll() {
+		if (isEmpty()) {
+			return null;
+		}
+
+		return data[(size--) - 1];
+	}
+
+	public E element() {
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+
+		return data[size - 1];
 	}
 
 	public E peek() {
+		if (isEmpty()) {
+			return null;
+		}
 
+		return data[size - 1];
 	}
 
-	public E pop() {
+	// private
+	private boolean isEmpty() {
+		if (size == 0) {
+			return true;
+		}
 
+		return false;
 	}
 
-	public E push(E e) {
+	private boolean isFull() {
+		if (size == capacity) {
+			data = increaseCapacity(2 * data.length);
+		}
+
+		return false;
 	}
 
-	public int search(Object o) {
-
-	}
-
-	private E[] getArray(int size) {
-		return (E[]) new Object[size];
+	private E[] increaseCapacity(int capacity) {
+		return Arrays.copyOf(data, capacity);
 	}
 }
